@@ -4,7 +4,7 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
- * Created by worker1 on 18/05/15.
+ * Created by Favio on 18/05/15.
  */
 object BasicStatisticsMLlib {
 
