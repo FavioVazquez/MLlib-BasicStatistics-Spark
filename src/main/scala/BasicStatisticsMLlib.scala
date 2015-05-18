@@ -1,4 +1,4 @@
-import org.apache.spark.mllib.linalg.{Vector, Vectors}
+import org.apache.spark.mllib.linalg.{Matrix, Vector, Vectors}
 import org.apache.spark.mllib.stat.{Statistics, MultivariateStatisticalSummary}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
@@ -65,6 +65,18 @@ def main(args: Array[String]) {
 
   val correlation: Double = Statistics.corr(seriesX,seriesY,"pearson")
   println(correlation)
+
+  val data: RDD[Vector] = sc.parallelize(Seq.fill(100)(math.random)
+  .map {i => Vectors.dense(i)})
+
+  /**
+   * calculate the correlation matrix using Pearson's method. Use
+   * "spearman" for Spearman's method. If a method is not specified,
+   * Pearson's method will be used by default.
+   */
+
+  val correlMatrix: Matrix = Statistics.corr(data,"pearson")
+  println(correlMatrix)
 
   sc.stop()
   }
