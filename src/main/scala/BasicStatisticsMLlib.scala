@@ -49,25 +49,26 @@ def main(args: Array[String]) {
    * correlation.
    */
 
-  val seriesX: RDD[Double] = sc.parallelize(Seq.fill(1000)(math.random)
-  . map { i => i})
-  seriesX.take(20).foreach(println)
-
-  val seriesY: RDD[Double] = sc.parallelize(Seq.fill(1000)(math.random)
-  .map { i => i})
-  seriesY.take(20).foreach(println)
-
-    /**
-     * compute the correlation using Pearson's method. Enter "spearman"
-     * for Spearman's method. If a method is not specified,
-     * Pearson's method will be used by default.
-     */
-
-  val correlation: Double = Statistics.corr(seriesX,seriesY,"pearson")
-  println(correlation)
+//  val seriesX: RDD[Double] = sc.parallelize(Seq.fill(1000)(math.random)
+//  . map { i => i})
+//  seriesX.take(20).foreach(println)
+//
+//  val seriesY: RDD[Double] = sc.parallelize(Seq.fill(1000)(math.random)
+//  .map { i => i})
+//  seriesY.take(20).foreach(println)
+//
+//    /**
+//     * compute the correlation using Pearson's method. Enter "spearman"
+//     * for Spearman's method. If a method is not specified,
+//     * Pearson's method will be used by default.
+//     */
+//
+//  val correlation: Double = Statistics.corr(seriesX,seriesY,"pearson")
+//  println(correlation)
 
   val data: RDD[Vector] = sc.parallelize(Seq.fill(100)(math.random)
   .map {i => Vectors.dense(i)})
+  data.take(20).foreach(println)
 
   /**
    * calculate the correlation matrix using Pearson's method. Use
