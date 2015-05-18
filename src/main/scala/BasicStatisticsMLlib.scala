@@ -17,27 +17,54 @@ def main(args: Array[String]) {
     .set("spark.executor.memory", "12g")
   val sc = new SparkContext(conf)
 
-//  1. Summary Statistics
+////  1. Summary Statistics
+//
+//  /**
+//   * We provide column summary statistics for RDD[Vector] through the
+//   * function colStats available in Statistics.
+//   */
+//
+//  /**
+//   * colStats() returns an instance of MultivariateStatisticalSummary,
+//   * which contains the column-wise max, min, mean, variance, and number
+//   * of nonzeros, as well as the total count.
+//   */
+//
+//  val observations: RDD[Vector] = sc.parallelize((0 to 100).toSeq
+//  .map {i => Vectors.dense(i) } )
+//
+//  // Compute column summary statistics.
+//  val summary: MultivariateStatisticalSummary = Statistics.colStats(observations)
+//  println(summary.mean) // a dense vector containing the mean for each column
+//  println(summary.variance) // column-wise variance
+//  println(summary.numNonzeros) //number of nonzeros in each column
+
+//  2. Correlations
 
   /**
-   * We provide column summary statistics for RDD[Vector] through the
-   * function colStats available in Statistics.
+   * Calculating the correlation between two series of data is a common
+   * operation in Statistics. In MLlib we provide the flexibility to
+   * calculate pairwise correlations among many series. The supported
+   * correlation methods are currently Pearson’s and Spearman’s
+   * correlation.
    */
 
-  /**
-   * colStats() returns an instance of MultivariateStatisticalSummary,
-   * which contains the column-wise max, min, mean, variance, and number
-   * of nonzeros, as well as the total count.
-   */
+  val seriesX: RDD[Double] = sc.parallelize(Seq.fill(1000)(math.random)
+  . map { i => i})
+  println(seriesX.take(20))
 
-  val observations: RDD[Vector] = sc.parallelize((0 to 100).toSeq
-  .map {i => Vectors.dense(i) } )
+  val seriesY: RDD[Double] = sc.parallelize(Seq.fill(1000)(math.random)
+  .map { i => i})
+  println(seriesY.take(20))
 
-  // Compute column summary statistics.
-  val summary: MultivariateStatisticalSummary = Statistics.colStats(observations)
-  println(summary.mean) // a dense vector containing the mean for each column
-  println(summary.variance) // column-wise variance
-  println(summary.numNonzeros) //number of nonzeros in each column
+    /**
+     * compute the correlation using Pearson's method. Enter "spearman"
+     * for Spearman's method. If a method is not specified,
+     * Pearson's method will be used by default.
+     */
+
+  val correlation: Double = Statistics.corr(seriesX,seriesY,"pearson")
+  println(correlation)
 
   sc.stop()
   }
