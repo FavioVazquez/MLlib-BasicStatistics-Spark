@@ -30,7 +30,7 @@ def main(args: Array[String]) {
    * of nonzeros, as well as the total count.
    */
 
-  val observations: RDD[Vector] = sc.parallelize(Seq.range(0.0,100.0)
+  val observations: RDD[Vector] = sc.parallelize((0 to 100).toSeq
   .map {i => Vectors.dense(i) } )
 
   // Compute column summary statistics.
