@@ -51,11 +51,11 @@ def main(args: Array[String]) {
 
   val seriesX: RDD[Double] = sc.parallelize(Seq.fill(1000)(math.random)
   . map { i => i})
-  println(seriesX.take(20))
+  seriesX.take(20).foreach(println)
 
   val seriesY: RDD[Double] = sc.parallelize(Seq.fill(1000)(math.random)
   .map { i => i})
-  println(seriesY.take(20))
+  seriesY.take(20).foreach(println)
 
     /**
      * compute the correlation using Pearson's method. Enter "spearman"
